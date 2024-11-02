@@ -1,0 +1,74 @@
+name: big-bear-brave
+services:
+  brave:
+    cpu_shares: 90
+    command: []
+    container_name: big-bear-brave
+    deploy:
+      resources:
+        limits:
+          memory: 1935M
+    environment:
+      - LAUNCH_URL=https://community.bigbeartechworld.com/
+      - VNC_PW=casaos
+    hostname: big-bear-brave
+    image: kasmweb/brave:1.15.0-rolling
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/brave.png
+    ports:
+      - mode: ingress
+        target: 6901
+        published: "6901"
+        protocol: tcp
+    restart: unless-stopped
+    shm_size: "536870912"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-brave/Downloads
+        target: /home/kasm-user/Downloads
+        bind:
+          create_host_path: true
+    x-casaos:
+      envs:
+        - container: VNC_PW
+          description:
+            en_us: VNC Password
+        - container: LAUNCH_URL
+          description:
+            en_us: Launch URL
+    devices: []
+    cap_add: []
+    networks:
+      - default
+    privileged: false
+networks:
+  default:
+    name: big-bear-brave_default
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: BigBearTechWorld
+  category: BigBearCasaOS
+  description:
+    en_us: This Image contains a browser-accessible version of Brave.
+  developer: kasmweb
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/brave.png
+  index: /
+  is_uncontrolled: false
+  main: brave
+  port_map: "6901"
+  scheme: https
+  store_app_id: big-bear-brave
+  tagline:
+    en_us: Brave
+  thumbnail: ""
+  tips:
+    before_install:
+      en_us: |
+        Username: kasm_user
+        Password: casaos
+  title:
+    custom: ""
+    en_us: Brave
